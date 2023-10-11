@@ -16,7 +16,7 @@ class CatFixtures extends Fixture
         $cat->setSpecies('Siamois');
         $cat->setDescription('Un chat très gentil');
         $cat->setGender('male');
-        $cat->setPicture('https://www.wanimo.com/veterinaire/images/articles/chat/chaton-miaou.jpg');
+        $cat->setPicture('https://cdn.pixabay.com/photo/2014/11/30/14/11/cat-551554_1280.jpg');
         
         $manager->persist($cat);
 

@@ -19,7 +19,7 @@ class UserController extends AbstractController
         ]);
     }
     
-    #[Route('/users/{slug}', name: 'app_users_show')]
+    #[Route('/users/{id<\d+>}', name: 'app_users_show')]
     public function show(
         int $id,
         UserRepository $userRepository
