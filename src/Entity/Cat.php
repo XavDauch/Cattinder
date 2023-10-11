@@ -15,7 +15,7 @@ class Cat
 
     #[ORM\Column(length: 255)]
     private ?string $nickname = null;
-
+    
     #[ORM\Column]
     private ?int $age = null;
 
