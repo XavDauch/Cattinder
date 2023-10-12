@@ -36,12 +36,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $username = null;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Cat::class, orphanRemoval: true)]
-    private Collection $user;
+    #[ORM\OneToOne(inversedBy: 'user_id', cascade: ['persist', 'remove'])]
+    private ?Cat $Cat_id = null;
 
     public function __construct()
     {
-        $this->user = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -126,33 +125,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @return Collection<int, Cat>
-     */
-    public function getUser(): Collection
+    public function getCatId(): ?Cat
     {
-        return $this->user;
+        return $this->Cat_id;
     }
 
-    public function addUser(Cat $user): static
+    public function setCatId(?Cat $Cat_id): static
     {
-        if (!$this->user->contains($user)) {
-            $this->user->add($user);
-            $user->setUser($this);
-        }
+        $this->Cat_id = $Cat_id;
 
         return $this;
     }
 
-    public function removeUser(Cat $user): static
-    {
-        if ($this->user->removeElement($user)) {
-            // set the owning side to null (unless already changed)
-            if ($user->getUser() === $this) {
-                $user->setUser(null);
-            }
-        }
-
-        return $this;
-    }
 }

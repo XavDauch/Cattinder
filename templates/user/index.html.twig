@@ -11,7 +11,7 @@
     {% for user in users %}
         <tr>
             <td> 
-                <a href="{{ path('app_users_show', {id: user.id}) }}">{{ user.username.id }}</a> 
+                <a href="{{ path('app_users_show', {id: user.id}) }}">{{ user.username }}</a> 
             </td>
         </tr>
     {% else %}

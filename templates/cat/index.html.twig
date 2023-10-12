@@ -10,7 +10,9 @@
 
     {% for cat in cats %}
         <tr>
-            <td>{{ cat.nickname }}</td>
+            <td>
+            <a href="{{ path('app_cats_show', {id: cat.id}) }}">{{ cat.nickname }}</a> 
+            </td>
         </tr>
     {% else %}
         <tr>

@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Cat;
 use App\Repository\CatRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,6 +16,20 @@ class CatController extends AbstractController
     {
         return $this->render('cat/index.html.twig', [
             'cats' => $catRepository->findAll(),
+        ]);
+    }
+    #[Route('/cats/{id<\d+>}', name: 'app_cats_show')]
+    public function show(
+        int $id,
+        CatRepository $catRepository
+    ): Response
+        {
+        $cat = $catRepository->find($id);
+        if (!$cat) {
+            throw $this->createNotFoundException('cat not found');
+        }   
+        return $this->render('cat/show.html.twig', [
+            'cat' => $cat,
         ]);
     }
 }

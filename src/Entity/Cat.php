@@ -31,9 +31,8 @@ class Cat
     #[ORM\Column(length: 255)]
     private ?string $picture = null;
 
-    #[ORM\ManyToOne(inversedBy: 'user')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?User $user = null;
+    #[ORM\OneToOne(mappedBy: 'Cat_id', cascade: ['persist', 'remove'])]
+    private ?User $user_id = null;
 
     public function getId(): ?int
     {
@@ -112,15 +111,26 @@ class Cat
         return $this;
     }
 
-    public function getUser(): ?User
+    public function getUserId(): ?User
     {
-        return $this->user;
+        return $this->user_id;
     }
 
-    public function setUser(?User $user): static
+    public function setUserId(?User $user_id): static
     {
-        $this->user = $user;
+        // unset the owning side of the relation if necessary
+        if ($user_id === null && $this->user_id !== null) {
+            $this->user_id->setCatId(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($user_id !== null && $user_id->getCatId() !== $this) {
+            $user_id->setCatId($this);
+        }
+
+        $this->user_id = $user_id;
 
         return $this;
     }
+
 }
